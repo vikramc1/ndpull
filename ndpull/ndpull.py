@@ -170,7 +170,7 @@ def get_cube_lims(rng, stride=16):
     return buckets
 
 
-def collect_input_args(collection, experiment, channel, config_file=None, token=None, url='https://api.boss.neurodata.io', x=None, y=None, z=None, res=0, outdir='./', full_extent=False, print_metadata=False):
+def collect_input_args(collection, experiment, channel, config_file=None, token=None, url='https://api.boss.neurodata.io', x=None, y=None, z=None, res=0, outdir='./', full_extent=False, print_metadata=False, iso=False, threads=4):
     result = argparse.Namespace(
         collection=collection,
         experiment=experiment,
@@ -180,7 +180,9 @@ def collect_input_args(collection, experiment, channel, config_file=None, token=
         url=url,
         x=x, y=y, z=z, res=res, outdir=outdir,
         full_extent=full_extent,
-        print_metadata=print_metadata
+        print_metadata=print_metadata,
+        iso=iso,
+        threads=threads
     )
     return result
 
