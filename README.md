@@ -82,6 +82,9 @@ z = [90, 100]
 result = ndpull.collect_input_args(
     collection, experiment, channel, config_file, x=x, y=y, z=z, res=0, outdir='./')
 
+# validate args
+result, rmt = validate_args(args)
+
 # downloads the data
 ndpull.download_slices(result, rmt)
 ```
