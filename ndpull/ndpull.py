@@ -277,6 +277,7 @@ def download_slices(result, rmt, threads=4, return_numpy=False):
 
         save_to_tiffs(data_slices, rmt.meta, result, z_rng)
         if return_numpy:
+            print(z_rng)
             data_whole[z_rng[0]:z_rng[1],
                        result.y[0]:result.y[1],
                        result.x[0]:result.x[1]] = data_slices
