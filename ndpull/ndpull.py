@@ -218,7 +218,6 @@ def collect_args():
                         help='Number of threads for downloading data.')
     parser.add_argument('--iso', action='store_true',
                         help='Returns iso data (for downsampling in z)')
-
     return parser.parse_args()
 
 
@@ -231,13 +230,18 @@ def get_boss_config(boss_config_file):
     return token, boss_url
 
 
-def download_slices(result, rmt, threads=4):
+def download_slices(result, rmt, threads=4, return_numpy=False):
 
     # get the datatype
     ch_meta = rmt.get_channel_metdata()
     datatype = ch_meta['datatype']
 
     z_buckets = get_cube_lims(result.z, stride=CHUNK_SIZE[2])
+    if return_numpy: 
+        data = np.zeros(result.z[1] - result.z[0],
+                        result.y[1] - result.y[0],
+                        result.x[1] - result.x[0],
+                        dtype=datatype)
     for _, z_slices in tqdm(z_buckets.items()):
         z_rng = [z_slices[0], z_slices[-1] + 1]
 
@@ -271,6 +275,11 @@ def download_slices(result, rmt, threads=4):
                             x_rng[0] - result.x[0]:x_rng[1] - result.x[0]] = data
 
         save_to_tiffs(data_slices, rmt.meta, result, z_rng)
+        if return_numpy:
+            data[z_rng[1] - z_rng[0],
+                result.y[1] - result.y[0],
+                result.x[1] - result.x[0]] = data_slices
+    if return_numpy: return data
 
 
 def save_to_tiffs(data_slices, meta, result, z_rng):
