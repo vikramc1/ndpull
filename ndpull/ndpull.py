@@ -181,8 +181,7 @@ def collect_input_args(collection, experiment, channel, config_file=None, token=
         x=x, y=y, z=z, res=res, outdir=outdir,
         full_extent=full_extent,
         print_metadata=print_metadata,
-        iso=iso,
-        threads=threads
+        iso=iso
     )
     return result
 
