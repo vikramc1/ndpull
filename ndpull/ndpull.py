@@ -239,9 +239,9 @@ def download_slices(result, rmt, threads=4, return_numpy=False):
 
     z_buckets = get_cube_lims(result.z, stride=CHUNK_SIZE[2])
     if return_numpy: 
-        data = np.zeros(result.z[1] - result.z[0],
+        data = np.zeros((result.z[1] - result.z[0],
                         result.y[1] - result.y[0],
-                        result.x[1] - result.x[0],
+                        result.x[1] - result.x[0]),
                         dtype=datatype)
     for _, z_slices in tqdm(z_buckets.items()):
         z_rng = [z_slices[0], z_slices[-1] + 1]
